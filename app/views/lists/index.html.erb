@@ -5,9 +5,12 @@
 <p></p>
 </theads>
 <div class = "table">
-  <% @book.each do |list| %>
+  <% @books.each do |list| %>
   <span class = "list-title"><%= list.title %></span>
   <span class = "list-body"><%= list.body %></span>
+  <%= link_to 'Show', list_path(list.id), method: :get %>
+  <%= link_to 'Edit', edit_list_path(list.id), method: :get %>
+  <%= link_to 'Destroy', list_path(list.id), method: :delete, "data-confirm" => "Are you sure?" %>
   <% end %>
 </div>
 

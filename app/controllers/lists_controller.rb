@@ -1,25 +1,40 @@
 class ListsController < ApplicationController
   def new
-    @list = List.new
+    @book = Book.new
   end
 
   def index
-    @book = Book.all
+    @books= Book.all
+    
   end
 
   def show
+    @book = Book.find(params[:id])
   end
 
   def edit
+    @book = Book.find(params[:id])
+  end
+
+  def destroy
+    book = Book.find(params[:id])
+    book.destroy
+    redirect_to '/lists'
   end
 
   def create
-    list = Book.new(list_params)
+    @book = Book.new(book_params)
     if @book.save
-      flash[:notice] = "投稿が成功しました"
-      redirect_to list_path(list.id)
+      flash[:notice] = "Book was successfully created "
+      redirect_to list_path(:id)
     else
       render :new
     end
   end
+
+  private
+  def book_params
+    params.require(:book).permit(:title, :body)
+  end
+
 end
