@@ -1,11 +1,11 @@
 class ListsController < ApplicationController
   def new
-    @book = Book.new
   end
 
   def index
+    @book = Book.new
     @books= Book.all
-    
+
   end
 
   def show
@@ -26,10 +26,16 @@ class ListsController < ApplicationController
     @book = Book.new(book_params)
     if @book.save
       flash[:notice] = "Book was successfully created "
-      redirect_to list_path(:id)
+      redirect_to list_path(@book.id)
     else
       render :new
     end
+  end
+
+  def update
+    @book = Book.find(params[:id])
+    list.update(book_params)
+    redirect_to list_path(@book.id)
   end
 
   private
