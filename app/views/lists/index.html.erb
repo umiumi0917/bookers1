@@ -1,20 +1,36 @@
-<h1>Books</h1>
-<theads>
-<p><strong>Title</strong></p>
-<p><strong>Body</strong></p>
-<p></p>
-</theads>
-<div class = "table">
-  <% @books.each do |list| %>
-  <span class = "list-title"><%= list.title %></span>
-  <span class = "list-body"><%= list.body %></span>
-  <%= link_to 'Show', list_path(list.id), method: :get %>
-  <%= link_to 'Edit', edit_list_path(list.id), method: :get %>
-  <%= link_to 'Destroy', list_path(list.id), method: :delete, "data-confirm" => "Are you sure?" %>
-  <% end %>
-</div>
+<p id = "notice"><%= flash[:notice] %></p>
+    <h1>Books</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Body</th>
+          <th colspan = '3'></th>
+       </tr>
+      </thead>
+      <tbody>
+        <% @books.each do |list| %>
+        <tr>
+          <td><span class = "list-title"><%= list.title %></span></td>
+          <td><span class = "list-body"><%= list.body %></span></td>
+          <td><%= link_to 'Show', list_path(list.id), method: :get %></td>
+          <td><%= link_to 'Edit', edit_list_path(list.id), method: :get %></td>
+          <td><%= link_to 'Destroy', list_path(list.id), method: :delete, "data-confirm" => "Are you sure?" %></td>
+        </tr>
+        <% end %>
+       </tbody>
+    </table>
 
 <h1>New book</h1>
+<% if @book.errors.any? %>
+<%= @book.errors.count %> errors prohibited this book from being saved:
+<ul>
+  <% @book.errors.full_messages.each do |m| %>
+  <li><%= m %></li>
+  <% end %>
+</ul>
+<% end %>
+
 <%= form_with model: @book, url: '/lists', method: :post do |f| %>
 <h4>Title</h4>
   <%= f.text_field :title %>

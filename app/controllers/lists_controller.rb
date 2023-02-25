@@ -4,7 +4,7 @@ class ListsController < ApplicationController
 
   def index
     @book = Book.new
-    @books= Book.all
+    @books = Book.all
 
   end
 
@@ -19,6 +19,7 @@ class ListsController < ApplicationController
   def destroy
     book = Book.find(params[:id])
     book.destroy
+    flash[:notice] = "Book was successfully deleted "
     redirect_to '/lists'
   end
 
@@ -28,13 +29,14 @@ class ListsController < ApplicationController
       flash[:notice] = "Book was successfully created "
       redirect_to list_path(@book.id)
     else
-      render :new
+      @books = Book.all
+       render :index
     end
   end
 
   def update
     @book = Book.find(params[:id])
-    list.update(book_params)
+    @book.update(book_params)
     redirect_to list_path(@book.id)
   end
 
